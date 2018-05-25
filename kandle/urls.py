@@ -19,4 +19,6 @@ from kandleapp import views
 
 urlpatterns = [
     re_path(r'^$', views.index),
+    re_path(r'^create', views.create),
+    re_path(r'^event', views.event),
 ]

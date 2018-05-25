@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>kandle</title>
+</head>
+<body>
+    <h2>Список мероприятий</h2>
+    <table>
+        <tr><th>Id</th><th>Название</th><th>Описание</th></tr>
+        {% for event in events %}
+        <tr><td>{{ event.id }}</td><td>{{ event.name }}</td><td>{{ event.description }}</td></tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

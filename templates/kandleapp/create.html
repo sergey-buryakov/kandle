@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>kandle</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %} {% comment %}защита от CSRF-атак{% endcomment %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="Create" >
+    </form>
+</body>
+</html>
