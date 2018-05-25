@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponseRedirect
 from django.shortcuts import HttpResponse
+from django.http import HttpResponseNotFound
 import base64
 from .forms import CreateEventForm
 from .models import Event
@@ -8,9 +9,18 @@ from .models import Event
 def index(request):
     return render(request, 'index.html')
 
-def event(request):
-    events = Event.objects.all()
-    return render(request, "kandleapp/events.html", {"events": events})
+def event(request, eventid):
+    try:
+        event = Event.objects.get(eventId = eventid)
+        eventname = event.name
+        eventdescr = event.description
+
+        data = {"name": eventname, "description": eventdescr}
+        return render(request, "kandleapp/events.html", data)
+    except Event.DoesNotExist:
+        return HttpResponseNotFound("<h2>Event not found</h2>")
+    # events = Event.objects.all()
+    # return render(request, "kandleapp/events.html", {"events": events})
 
 def create(request):
     if request.method == "POST":

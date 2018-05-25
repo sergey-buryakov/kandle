@@ -7,10 +7,10 @@
 <body>
     <form method="POST">
         {% csrf_token %} {% comment %}защита от CSRF-атак{% endcomment %}
-    <table>
-        {{ form }}
-    </table>
-    <input type="submit" value="Create" >
+        <table>
+            {{ form }}
+        </table>
+        <input type="submit" value="Create" >
     </form>
 </body>
 </html>
