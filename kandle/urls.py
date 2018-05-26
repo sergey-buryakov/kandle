@@ -15,8 +15,11 @@ Including another URLconf
 """
 # from django.contrib import admin
 from django.urls import re_path
+from django.conf.urls import include
 from kandleapp import views
 
 urlpatterns = [
     re_path(r'^$', views.index),
+    re_path(r'^sign_up$', views.sign_up),
+    re_path(r'^accounts/', include('django.contrib.auth.urls'))
 ]

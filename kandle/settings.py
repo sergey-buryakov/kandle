@@ -121,3 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
+# Redirect mail sending to console (THINK ABOUT IT!!!)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

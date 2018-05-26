@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Kandle</title>
-</head>
-<body>
+{% extends "__Layout.html" %}
+
+{% block header %}
     <h1>Welcome to Kandle!</h1>
-</body>
-</html>
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <p>User: {{ user.get_username }}</p>
+        <p><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></p>   
+    {% else %}
+        <p><a href="sign_up">Sign up</a></p>
+        <p><a href="{% url 'login'%}?next={{request.path}}">Login</a></p>   
+    {% endif %}
+{% endblock %}

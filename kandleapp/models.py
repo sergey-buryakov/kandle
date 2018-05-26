@@ -1,11 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-class User(models.Model):
-	userId = models.AutoField(db_column='userId', primary_key=True)
-	login = models.TextField()
-	password = models.TextField()
-	email = models.EmailField()
 class Event(models.Model):
 	eventId = models.UUIDField()
 	name = models.TextField()
