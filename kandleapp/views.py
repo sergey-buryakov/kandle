@@ -35,7 +35,7 @@ def settings(request):
     user = request.user
 
     try:
-        google_login = user.social_auth.get(provider='google')
+        google_login = user.social_auth.get(provider='google-oauth2')
     except UserSocialAuth.DoesNotExist:
         google_login = None
 
