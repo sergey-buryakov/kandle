@@ -23,7 +23,11 @@
       <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Google.</p>
     {% endif %}
   {% else %}
-    <a href="{% url 'social:begin' 'google-oauth2' %}">Connect to Google</a>
+    {% if not user.has_usable_password %}
+      <a href="{% url 'social:begin' 'google-oauth2' %}">Connect to Google</a>
+    {% else %}
+      <p>You already have all needed authorization information</p>
+    {% endif %}
   {% endif %}
 
   <h3>Facebook</h3>
@@ -42,7 +46,11 @@
       <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Facebook.</p>
     {% endif %}
   {% else %}
-    <a href="{% url 'social:begin' 'facebook' %}">Connect to Facebook</a>
+    {% if not user.has_usable_password %}
+      <a href="{% url 'social:begin' 'facebook' %}">Connect to Facebook</a>
+    {% else %}
+      <p>You already have all needed authorization information</p>
+    {% endif %}
   {% endif %}
 
 {% endblock %}

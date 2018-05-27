@@ -12,6 +12,13 @@ from django.contrib.auth.models import User
 import base64
 from .forms import Sign_up_form, CreateEventForm
 from .models import Event
+#===============================
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
+from social_core.actions import do_complete
+from social_django.utils import psa
+from social_django.views import NAMESPACE, _do_login
+from django.contrib.auth import REDIRECT_FIELD_NAME
 
 def index(request):
     return render(request, 'index.html')
@@ -71,6 +78,15 @@ def password(request):
     else:
         form = PasswordForm(request.user)
     return render(request, 'registration/password.html', {'form': form})
+
+@never_cache
+@csrf_exempt
+@psa('{0}:complete'.format(NAMESPACE))
+def complete(request, backend, *args, **kwargs):
+    """Authentication complete view"""
+    return do_complete(request.backend, _do_login, user=None,
+                       redirect_name=REDIRECT_FIELD_NAME, request=request,
+                       *args, **kwargs)
 
 def event(request, eventid):
     try:
