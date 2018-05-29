@@ -17,11 +17,17 @@ Including another URLconf
 from django.urls import re_path
 from django.conf.urls import include
 from kandleapp import views
+#============================
+from social_django.urls import extra
 
 urlpatterns = [
     re_path(r'^$', views.index),
     re_path(r'^sign_up$', views.sign_up),
     re_path(r'^accounts/', include('django.contrib.auth.urls')),
     re_path(r'^create', views.create),
-    re_path(r'^event/(?P<eventid>.+)', views.event) #add regex
+    re_path(r'^event/(?P<eventid>.+)', views.event), #add regex
+    re_path(r'^oauth/complete/(?P<backend>[^/]+){0}$'.format(extra), views.complete, name='complete'),
+    re_path(r'^oauth/', include('social_django.urls', namespace='social')),
+    re_path(r'^settings/$', views.settings, name='settings'),
+    re_path(r'^settings/password/$', views.password, name='password'),
 ]

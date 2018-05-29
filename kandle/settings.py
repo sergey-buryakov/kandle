@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'kandleapp'
 ]
 
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'kandle.urls'
@@ -65,10 +67,22 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+# Модель пользователя. Здесь стандартная.
+SOCIAL_AUTH_USER_MODEL = 'auth.User'
+
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 WSGI_APPLICATION = 'kandle.wsgi.application'
 
@@ -122,12 +136,37 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 
 # Redirect mail sending to console (THINK ABOUT IT!!!)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+
+# FACEBOOK
+# Только для facebook, указываем запрашиваемые поля
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'locale': 'ru_RU',
+  'fields': 'id, name, email',
+}
+# Разрешение на получение поля email
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+# Ключи
+SOCIAL_AUTH_FACEBOOK_KEY = '1631194576997886'
+SOCIAL_AUTH_FACEBOOK_SECRET = '08b6238086eb770ea016e8326081840b'
+
+# Google
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1064244101764-nr0shetrrk3dti9pqu8j1kav79f2n91i.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'WnIuxyQ7GnIRoXxq6b5LCvIx'
