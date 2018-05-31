@@ -17,6 +17,7 @@ from django.shortcuts import HttpResponseRedirect
 from django.shortcuts import HttpResponse
 from django.http import HttpResponseNotFound
 import base64
+from datetime import datetime
 from .forms import Sign_up_form, CreateEventForm
 from .models import Event
 
@@ -104,18 +105,23 @@ def event(request, eventid):
     # return render(request, "kandleapp/events.html", {"events": events})
 
 def create(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        description = request.POST.get("description")
-        return HttpResponse("<p>Name: {0}, decr: {1}</p>".format(name, description))
-        # event = Event()
-        # name = request.POST.get("name")
-        # event.name = name
-        # event.description = request.POST.get("description")
-        # name = name.encode()
-        # event.eventId = base64.b64encode(name).decode()
-        # event.save()
-        # return HttpResponseRedirect("/event")
-    else:
-        createform = CreateEventForm()
+    # if request.user.is_authenticated:
+        if request.method == "POST":
+            # name = request.POST.get("name")
+            # description = request.POST.get("description")
+            # return HttpResponse("<p>Name: {0}, decr: {1}</p>".format(name, description))
+            createform = CreateEventForm(request.POST)
+            if not createform.startVote:
+                createform.startVote = datetime.now()
+            if createform.is_valid():
+                event = createform.save(commit=False)
+                name = event.name
+                event.eventId = base64.b64encode(name.encode()).decode()
+                event.userId = request.user
+                event.save()
+                return redirect('event', eventid=event.eventId)
+        else:
+            createform = CreateEventForm()
         return render(request, "kandleapp/create.html", {"form": createform})
+    # else:
+    #     return redirect(login)
