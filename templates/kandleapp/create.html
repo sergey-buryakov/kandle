@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-{% load static %}
+﻿<!DOCTYPE html> {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>kandle</title>
 
     <!-- Styles bootstrap and bootstrap-datepicker -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
 
     <link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.min.css' %}">
     <link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.min.css.map' %}">
@@ -17,40 +19,102 @@
 
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <!-- Scripts bootstrap and bootstrap-datepicker -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
     <script src="{% static 'bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
     <script src="{% static 'bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js' %}"></script>
+
     <!-- End scripts bootstrap and bootstrap-datepicker -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 </head>
+
 <body>
 
     <form method="POST">
         {% csrf_token %} {% comment %}защита от CSRF-атак{% endcomment %}
-        <div class="span5 col-md-5" >
-            <div class="form-group">
-                {{form.name.label_tag}}
-                {{form.name}}
+        <div class="span5 col-md-12">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        {{form.name.label_tag}} {{form.name}}
+                    </div>
+                    <div class="form-group">
+                        {{form.description.label_tag}} {{form.description}}
+                    </div>
+                    <div class="input-group input-daterange datepicker" id="datepicker">
+                        {{form.startVote}}
+                        <span class="input-group-addon">to</span>
+                        {{ form.finishVote }}
+                    </div>
+                </div>
+
+                <div class="col-md-7" id="rowForInsert">
+                    <div class="row">
+                        <div class="col-md-3">
+                            {{dateForm.date}}
+                        </div>
+                        <div class="timepicker col-md-2">
+                            {{dateForm.startTime}}
+                        </div>
+                        <div class="timepicker col-md-2">
+                            {{dateForm.finishTime}}
+                        </div>
+                    </div>
+                </div>
+                <button id="AddDate">AddDate</button>
+                <script>
+                    $("#AddDate").click(function () {
+                        $("#rowForInsert").append('<div class="row"> \
+                                                        <div class="col-md-3">\
+                                                            {{dateForm.date}}\
+                                                        </div>\
+                                                    <div class="timepicker col-md-2">\
+                                                        {{dateForm.startTime}}\
+                                                    </div>\
+                                                    <div class="timepicker col-md-2"">\
+                                                        {{dateForm.finishTime}}\
+                                                    </div>\
+                                                </div>'
+                        );
+
+                        callDateTimePicker();
+                    });
+
+
+                </script>
             </div>
-            <div class="form-group">
-                {{form.description.label_tag}}
-                {{form.description}}
-            </div>
-            <div class="input-group input-daterange" id="datepicker">
-                {{form.startVote}}
-                <span class="input-group-addon">to</span>
-                {{ form.finishVote }}
-            </div>
-            <input type="submit" value="Create" >
+            <input type="submit" value="Create">
         </div>
 
     </form>
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script>
-        $('#datepicker').datepicker({
+        function callDateTimePicker() {
+            $('.datepicker').datepicker({
                 weekStart: 1,
                 startDate: "now",
                 maxViewMode: 0,
                 language: "ru"
             });
+
+            $('.timepicker').timepicker({
+                timeFormat: 'h:mm p',
+                interval: 60,
+                minTime: '10',
+                maxTime: '6:00pm',
+                defaultTime: '11',
+                startTime: '10:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: false
+            });
+        }
+        callDateTimePicker();
     </script>
+
 </body>
+
 </html>

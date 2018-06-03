@@ -18,7 +18,7 @@ from django.shortcuts import HttpResponse
 from django.http import HttpResponseNotFound
 import base64
 from datetime import datetime
-from .forms import Sign_up_form, CreateEventForm
+from .forms import Sign_up_form, CreateEventForm, CreateDate
 from .models import Event
 
 def index(request):
@@ -108,6 +108,7 @@ def event(request, eventid):
 #@login_required
 def create(request):
     if request.method == "POST":
+        
         createform = CreateEventForm(request.POST)
         if createform.is_valid():
             event = createform.save(commit=False)
@@ -117,5 +118,6 @@ def create(request):
             event.save()
             return redirect('event', eventid=event.eventUrl)
     else:
+        dateForm = CreateDate(auto_id=False)
         createform = CreateEventForm()
-    return render(request, "kandleapp/create.html", {"form": createform})
+    return render(request, "kandleapp/create.html", {"form": createform, "dateForm": dateForm})
