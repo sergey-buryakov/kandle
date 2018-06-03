@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.forms import ModelForm
-from .models import Event
+from .models import Event, Date
 from django.utils.translation import ugettext_lazy as _
 
 # class DateInput(forms.DateInput):
@@ -25,4 +25,13 @@ class CreateEventForm(ModelForm):
         labels = {
             'name': _('Название'),
             'description': _('Описание')
+        }
+class CreateDate(forms.ModelForm):
+    class Meta:
+        model = Date
+        fields = ['date', 'startTime', 'finishTime']
+        widgets = {
+            'date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'startTime': forms.DateInput(attrs={'class':'timepicker'}),
+            'finishTime': forms.DateInput(attrs={'class':'timepicker'})
         }
