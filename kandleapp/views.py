@@ -19,7 +19,7 @@ from django.http import HttpResponseNotFound
 import base64
 from datetime import datetime
 from .forms import Sign_up_form, CreateEventForm
-from .models import Event
+from .models import Event,Date
 
 def index(request):
     return render(request, 'index.html')
@@ -100,12 +100,12 @@ def event(request, eventid):
         dates = event.date_set.all()
         url = request.get_host() + request.get_full_path()
 
-        data = {"event": event, "description": dates, "url": url}
+        data = {"event": event, "dates": dates, "url": url}
         return render(request, "kandleapp/events.html", data)
     except Event.DoesNotExist:
         return HttpResponseNotFound("<h2>Event not found</h2>")
 
-#@login_required
+@login_required
 def create(request):
     if request.method == "POST":
         createform = CreateEventForm(request.POST)
