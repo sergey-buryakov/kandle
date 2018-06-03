@@ -30,37 +30,32 @@
 
 <body>
 
-    <form method="POST">
+    <form id="form" method="POST">
         {% csrf_token %} {% comment %}защита от CSRF-атак{% endcomment %}
         <div class="span5 col-md-12">
             <div class="row">
                 <div class="col-md-5">
                     <div class="form-group">
-                        {{form.name.label_tag}}
-                        {{form.name}}
-                        {% for error in form.name.errors %}
-                            <div class="alert alert-danger">
-                                {{error}}
-                            </div>
+                        {{form.name.label_tag}} {{form.name}} {% for error in form.name.errors %}
+                        <div class="alert alert-danger">
+                            {{error}}
+                        </div>
                         {% endfor %}
                     </div>
                     <div class="form-group">
-                        {{form.description.label_tag}}
-                        {{form.description}}
-                        {% for error in form.description.errors %}
-                            <div class="alert alert-danger">
-                                {{error}}
-                            </div>
+                        {{form.description.label_tag}} {{form.description}} {% for error in form.description.errors %}
+                        <div class="alert alert-danger">
+                            {{error}}
+                        </div>
                         {% endfor %}
                     </div>
                     <div class="input-group input-daterange" id="datepicker">
                         {{form.startVote}}
                         <span class="input-group-addon">to</span>
-                        {{ form.finishVote }}
-                        {% for error in form.startVote.errors %}
-                            <div class="alert alert-danger">
-                                {{error}}
-                            </div>
+                        {{ form.finishVote }} {% for error in form.startVote.errors %}
+                        <div class="alert alert-danger">
+                            {{error}}
+                        </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -101,7 +96,7 @@
                 </script>
 
             </div>
-            <input type="submit" value="Create">
+            <input type="submit" id="sub" value="Create">
         </div>
 
     </form>
@@ -110,8 +105,65 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script>
+        
+
+
+            $("#form").submit(function (eventObj) {
+                    var allStartTimes = [];
+                    var allFinishTimes = [];
+                    $("[name='startTime']").each(function (index, elem) {
+                        allStartTimes[index] = elem.value;
+                    });
+                    $("[name='finishTime']").each(function (index, elem) {
+                        allFinishTimes[index] = elem.value;
+                    });
+
+                    var wishDates = {};
+                    $(".datepicker").each(function (index, elem) {
+                        wishDates[elem.value] = [allStartTimes[index], allFinishTimes[index]];
+                    });
+                    // alert(JSON.stringify(wishDates));
+                    // console.log(JSON.stringify(wishDates));
+                    // var values = {};
+                    // var fields = $('#form :input');
+                    // $.each(fields, function (i, field) {
+                    //     var dom = $(field),
+                    //         name = dom.attr('id'),
+                    //         value = dom.val();
+                    //     values[name] = value;
+                    // });
+                    // values.wishDates = {};
+                    // // $.each(wishDates, function (i, field) {
+                    // //     values.wishDates[field[i] + "[]"] = field;
+                    // // });
+
+                    // // post data
+                    // $.post('http://localhost:8000/create', values);
+                    $('<input />').attr('type', 'hidden')
+                        .attr('name', "wishDates")
+                        .attr('value', JSON.stringify(wishDates))
+                        .appendTo('#form');
+                    // return true;
+                });
+
+
+//             $( "#form" ).submit(function( event ) {
+//   console.log( $( this ).serializeArray() );
+//   event.preventDefault();
+// });
+            // $.ajax({
+            //     url: "http://localhost:8000/create",
+            //     type: 'POST',
+            //     data: { 'wishDates': wishDates },
+            //     traditional: true,
+            //     dataType: 'html',
+            //     success: function (result) {
+            //         alert("kkk");
+            //     }
+            // });
+    
         function callDateTimePicker() {
-            $('#datepicker').datepicker({
+            $('.datepicker').datepicker({
                 weekStart: 1,
                 startDate: "now",
                 maxViewMode: 0

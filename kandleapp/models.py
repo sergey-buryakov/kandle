@@ -17,4 +17,4 @@ class Date(models.Model):
 	finishTime = models.TimeField(null=False)
 	eventId = models.ForeignKey(Event, on_delete = models.CASCADE)
 	users = models.ManyToManyField(User)
-	
+

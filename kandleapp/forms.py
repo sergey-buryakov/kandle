@@ -16,6 +16,7 @@ class Sign_up_form(UserCreationForm):
 class CreateEventForm(ModelForm):
     class Meta:
         model = Event
+        
         fields = ['name', 'description', 'startVote', 'finishVote']
         widgets = {
             'name': forms.TextInput(),
@@ -35,3 +36,4 @@ class CreateDate(forms.ModelForm):
             'startTime': forms.DateInput(attrs={'class':'timepicker'}),
             'finishTime': forms.DateInput(attrs={'class':'timepicker'})
         }
+

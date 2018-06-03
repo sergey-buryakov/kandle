@@ -108,7 +108,8 @@ def event(request, eventid):
 
 @login_required
 def create(request):
-    if request.method == "POST":
+     dateForm = CreateDate()
+     if request.method == "POST":
         
         createform = CreateEventForm(request.POST)
         if createform.is_valid():
@@ -118,7 +119,7 @@ def create(request):
             event.userId = request.user
             event.save()
             return redirect('event', eventid=event.eventUrl)
-    else:
-        dateForm = CreateDate(auto_id=False)
+     else:
+       
         createform = CreateEventForm()
-    return render(request, "kandleapp/create.html", {"form": createform, "dateForm": dateForm})
+     return render(request, "kandleapp/create.html", {"form": createform, "dateForm": dateForm})
