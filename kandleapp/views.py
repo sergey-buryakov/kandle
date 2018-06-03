@@ -91,37 +91,31 @@ def complete(request, backend, *args, **kwargs):
                        *args, **kwargs)
 #endregion
 
+#@login_required
 def event(request, eventid):
     try:
-        event = Event.objects.get(eventId = eventid)
-        eventname = event.name
-        eventdescr = event.description
+        event = Event.objects.get(eventUrl = eventid)
+        # if event.finishVote == datetime.today():
+        #     None
+        dates = event.date_set.all()
+        url = request.get_host() + request.get_full_path()
 
-        data = {"name": eventname, "description": eventdescr}
+        data = {"event": event, "description": dates, "url": url}
         return render(request, "kandleapp/events.html", data)
     except Event.DoesNotExist:
         return HttpResponseNotFound("<h2>Event not found</h2>")
-    # events = Event.objects.all()
-    # return render(request, "kandleapp/events.html", {"events": events})
 
+#@login_required
 def create(request):
-    # if request.user.is_authenticated:
-        if request.method == "POST":
-            # name = request.POST.get("name")
-            # description = request.POST.get("description")
-            # return HttpResponse("<p>Name: {0}, decr: {1}</p>".format(name, description))
-            createform = CreateEventForm(request.POST)
-            if not createform.startVote:
-                createform.startVote = datetime.now()
-            if createform.is_valid():
-                event = createform.save(commit=False)
-                name = event.name
-                event.eventId = base64.b64encode(name.encode()).decode()
-                event.userId = request.user
-                event.save()
-                return redirect('event', eventid=event.eventId)
-        else:
-            createform = CreateEventForm()
-        return render(request, "kandleapp/create.html", {"form": createform})
-    # else:
-    #     return redirect(login)
+    if request.method == "POST":
+        createform = CreateEventForm(request.POST)
+        if createform.is_valid():
+            event = createform.save(commit=False)
+            name = event.name
+            event.eventUrl = base64.b64encode(name.encode()).decode()
+            event.userId = request.user
+            event.save()
+            return redirect('event', eventid=event.eventUrl)
+    else:
+        createform = CreateEventForm()
+    return render(request, "kandleapp/create.html", {"form": createform})

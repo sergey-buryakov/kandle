@@ -6,8 +6,8 @@ class Event(models.Model):
 	eventUrl = models.TextField()
 	name = models.TextField()
 	description = models.TextField()
-	startVote = models.DateTimeField(null=False)
-	finishVote = models.DateTimeField(null=False)
+	startVote = models.DateField()
+	finishVote = models.DateField()
 	userId = models.ForeignKey(User, on_delete = models.CASCADE)
 	
 class Date(models.Model):

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django.forms import ModelForm
 from .models import Event
-from django.contrib.admin import widgets
+from django.utils.translation import ugettext_lazy as _
 
 # class DateInput(forms.DateInput):
 #     input_type = 'date'
@@ -19,4 +19,10 @@ class CreateEventForm(ModelForm):
         fields = ['name', 'description', 'startVote', 'finishVote']
         widgets = {
             'name': forms.TextInput(),
+            'startVote': forms.DateInput(attrs={'class': 'input-sm form-control'}),
+            'finishVote': forms.DateInput(attrs={'class': 'input-sm form-control'})
+        }
+        labels = {
+            'name': _('Название'),
+            'description': _('Описание')
         }
