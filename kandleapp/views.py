@@ -12,12 +12,19 @@ from social_django.utils import psa
 from social_django.views import NAMESPACE, _do_login
 from django.contrib.auth import REDIRECT_FIELD_NAME
 #endregion
+#region Django moduls
 from django.shortcuts import render, redirect
 from django.shortcuts import HttpResponseRedirect
 from django.shortcuts import HttpResponse
 from django.http import HttpResponseNotFound
+#endregion
+#region Other moduls
 import base64
+import re
+import string
+import random
 from datetime import datetime
+#endregion
 from .forms import Sign_up_form, CreateEventForm, CreateDate
 from .models import Event,Date
 
@@ -112,13 +119,28 @@ def create(request):
      if request.method == "POST":
         
         createform = CreateEventForm(request.POST)
+        dateset = request.POST['wishDates']
+        dateset = re.sub(r'[{},\]"]|:\[|\],', ' ', dateset).strip()
+        dateset = re.split(r"\s+", dateset)
+        dates = []
+        for i in range(0, len(dateset), 3):
+            date = Date(date=datetime.strptime(dateset[i], "%m/%d/%Y").date(), startTime=dateset[i + 1], finishTime=dateset[i + 2])
+            date.date = date.date.strftime("%Y-%m-%d")
+            dates.append(date)
         if createform.is_valid():
             event = createform.save(commit=False)
             name = event.name
             event.eventUrl = base64.b64encode(name.encode()).decode()
+            while (Event.objects.filter(eventUrl=event.eventUrl)):
+                r = random.choice(string.ascii_uppercase + string.digits)
+                event.eventUrl = base64.b64encode((name+r).encode()).decode()
+
             event.userId = request.user
             event.save()
-            return redirect('event', eventid=event.eventUrl)
+            for date in dates:
+                event.date_set.add(date, bulk=False)
+
+            return redirect(event, eventid=event.eventUrl)
      else:
        
         createform = CreateEventForm()
