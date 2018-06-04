@@ -12,16 +12,21 @@
     <p>Link: {{ url }}</p>
     {{event.startVote}}
     <div></div>
-
-    <ul>
-        {% for d in dates %}
-        <li>{{ d.date }} {{d.startTime}} {{d.finishTime}} {% if user in d.users.all %}
-            <input id="checkbox{{d.dateId}}" type="checkbox" checked> {% else %}
-            <input id="checkbox{{d.dateId}}" type="checkbox"> {% endif %}
-        </li>
-        {% endfor %}
-
-    </ul>
+<form id="form" method="POST">
+        {% csrf_token %}
+        <ul>
+                {% for d in dates %}
+                <li>{{ d.date }} {{d.startTime}} {{d.finishTime}} {% if user in d.users.all %}
+                    <input name="che" id="checkbox{{d.dateId}}" type="checkbox" checked value="{{d.dateId}}"> {% else %}
+                    <input name="che" id="checkbox{{d.dateId}}" type="checkbox" value="{{d.dateId}}"> {% endif %}
+                </li>
+                {% endfor %}
+        
+            </ul>
+            <input id="fef" type="text">
+            <button type="submit">Vote</button>
+</form>
+    
 
 </body>
 

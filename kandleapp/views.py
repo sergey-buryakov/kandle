@@ -95,11 +95,14 @@ def complete(request, backend, *args, **kwargs):
 #@login_required
 def event(request, eventid):
     try:
+
         event = Event.objects.get(eventUrl = eventid)
         # if event.finishVote == datetime.today():
         #     None
-
+        if request.method == "POST":
+            lis = request.POST.getlist("che")
         dates = event.date_set.all()
+
         url = request.get_host() + request.get_full_path()
         data = {"event": event, "dates": dates, "url": url}
         return render(request, "kandleapp/events.html", data)
