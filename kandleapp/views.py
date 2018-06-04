@@ -98,9 +98,9 @@ def event(request, eventid):
         event = Event.objects.get(eventUrl = eventid)
         # if event.finishVote == datetime.today():
         #     None
+
         dates = event.date_set.all()
         url = request.get_host() + request.get_full_path()
-
         data = {"event": event, "dates": dates, "url": url}
         return render(request, "kandleapp/events.html", data)
     except Event.DoesNotExist:

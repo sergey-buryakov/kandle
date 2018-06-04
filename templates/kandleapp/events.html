@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>kandle</title>
 </head>
+
 <body>
     <h1>{{ event.name }}</h1>
     <p>Description: {{ event.description }}</p>
     <p>Link: {{ url }}</p>
     {{event.startVote}}
     <div></div>
+
+    <ul>
+        {% for d in dates %}
+        <li>{{ d.date }} {{d.startTime}} {{d.finishTime}} {% if user in d.users.all %}
+            <input id="checkbox{{d.dateId}}" type="checkbox" checked> {% else %}
+            <input id="checkbox{{d.dateId}}" type="checkbox"> {% endif %}
+        </li>
+        {% endfor %}
+
+    </ul>
+
 </body>
+
 </html>
