@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>kandle</title>
 </head>
+
 <body>
     <h1>{{ event.name }}</h1>
     <p>Description: {{ event.description }}</p>
     <p>Link: {{ url }}</p>
     {{event.startVote}}
     <div></div>
+<form id="form" method="POST">
+        {% csrf_token %}
+        <ul>
+                {% for d in dates %}
+                <li>{{ d.date }} {{d.startTime}} {{d.finishTime}} {% if user in d.users.all %}
+                    <input name="che" id="checkbox{{d.dateId}}" type="checkbox" checked value="{{d.dateId}}"> {% else %}
+                    <input name="che" id="checkbox{{d.dateId}}" type="checkbox" value="{{d.dateId}}"> {% endif %}
+                </li>
+                {% endfor %}
+        
+            </ul>
+            <input id="fef" type="text">
+            <button type="submit">Vote</button>
+</form>
+{% if user.username == event.userId.username %}
+
+    <button>Finish vote</button>
+    <!-- There is need to send POST -->
+{% endif %}
 </body>
+
 </html>

@@ -9,6 +9,8 @@ class Event(models.Model):
 	startVote = models.DateField()
 	finishVote = models.DateField()
 	userId = models.ForeignKey(User, on_delete = models.CASCADE)
+	private = models.BooleanField(default=True)
+	closedForVote = models.BooleanField(default=False)
 	
 class Date(models.Model):
 	dateId = models.AutoField(db_column='dateId', primary_key=True)

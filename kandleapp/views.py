@@ -98,16 +98,33 @@ def complete(request, backend, *args, **kwargs):
                        redirect_name=REDIRECT_FIELD_NAME, request=request,
                        *args, **kwargs)
 #endregion
-
+def showStatistic(request,event):
+    dates = event.date_set.all()
+    countUserForDates={}
+    for date in dates:
+        countUserForDates[date.date.strftime('%m/%d/%Y')] = date.users.all().count()
+    data = {"countUserForDates": countUserForDates}
+    return render(request, "kandleapp/voteResult.html", data)
 #@login_required
 def event(request, eventid):
     try:
+
         event = Event.objects.get(eventUrl = eventid)
+        # if event.closedForVote:
+        
+        #return showStatistic(re
+        # quest,event)     
         # if event.finishVote == datetime.today():
         #     None
+        if request.method == "POST":
+            lis = request.POST.getlist("che")
+            #
+            #
+            #
+            #there is need to be written code for delete all user's dates and paste new set
         dates = event.date_set.all()
-        url = request.get_host() + request.get_full_path()
 
+        url = request.get_host() + request.get_full_path()
         data = {"event": event, "dates": dates, "url": url}
         return render(request, "kandleapp/events.html", data)
     except Event.DoesNotExist:
