@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>kandle</title>
+</head>
+<body> 
+    <p>Vote result:</p>
+    <ul>
+    {% for d,c in countUserForDates.items %}
+        <li>{{d}}<p style="display:inline;"> have voted :{{c}} people</p></li>
+    {% endfor %}
+</ul>
+</body>

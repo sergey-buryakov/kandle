@@ -26,8 +26,11 @@
             <input id="fef" type="text">
             <button type="submit">Vote</button>
 </form>
-    
+{% if user.username == event.userId.username %}
 
+    <button>Finish vote</button>
+    <!-- There is need to send POST -->
+{% endif %}
 </body>
 
 </html>
