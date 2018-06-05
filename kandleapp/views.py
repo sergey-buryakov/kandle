@@ -121,13 +121,18 @@ def event(request, eventid):
             event.save()
             return showStatistic(request, event)
         if request.method == "POST":
-            lis = request.POST.getlist("che")
-            user = User.objects.get(id=request.user.id)
-            if user.date_set.exists():
-                user.date_set.clear()
-            for i in lis:
-                user.date_set.add(Date.objects.get(dateId=i))
-            return redirect(request.path)
+            if 'vote' in request.POST:
+                lis = request.POST.getlist("che")
+                user = User.objects.get(id=request.user.id)
+                if user.date_set.exists():
+                    user.date_set.clear()
+                for i in lis:
+                    user.date_set.add(Date.objects.get(dateId=i))
+                return redirect(request.path)
+            if 'finish vote' in request.POST:
+                event.closedForVote = True
+                event.save()
+                return showStatistic(request, event)
         else:
             dates = event.date_set.all()
             url = request.get_host() + request.get_full_path()

@@ -24,13 +24,12 @@
 
         </ul>
         <input id="fef" type="text">
-        <button type="submit">Vote</button>
+        <button type="submit" name="vote">Vote</button>
+        {% if user == event.userId %}
+            <button type="submit" name="finish vote">Finish vote</button>
+        {% endif %}
     </form>
-    {% if user == event.userId %}
 
-        <button>Finish vote</button>
-        <!-- There is need to send POST -->
-    {% endif %}
 </body>
 
 </html>
