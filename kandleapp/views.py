@@ -175,6 +175,50 @@ def create(request):
      return render(request, "kandleapp/create.html", {"form": createform, "dateForm": dateForm})
 
 # @login_required
-# def userdash(request):
-#     events = request.user.event_set.all()
-#     return render(request, "kandleapp/dashboard.html", {"events": events})
+def userdash(request):
+    events = request.user.event_set.all()
+    url = request.get_host()
+    countForHighInterestedEvent = 0
+    popularEvent=[]
+    # forming popular event
+    #region start
+    for event in events:
+        dates = event.date_set.all()
+        uniqUsersForDate=[]
+        for date in dates:
+            for user in date.users.all():
+                if user in uniqUsersForDate:
+                    continue
+                else:
+                    uniqUsersForDate.append(user)
+        if uniqUsersForDate.__len__() > countForHighInterestedEvent:
+            countForHighInterestedEvent = uniqUsersForDate.__len__()
+            popularEvent=[event]
+        elif uniqUsersForDate.__len__() == countForHighInterestedEvent:
+            popularEvent.append(event)
+        popEvent={"events":popularEvent,"peopleCount":countForHighInterestedEvent}
+        #endregion
+    
+    countForUnInterestedEvent = 10000000000000000000
+    unpopularEvent=[]
+    # forming unpopular events
+    #region start
+    for event in events:
+        dates = event.date_set.all()
+        uniqUsersForDate=[]
+        for date in dates:
+            for user in date.users.all():
+                if user in uniqUsersForDate:
+                    continue
+                else:
+                    uniqUsersForDate.append(user)
+        if uniqUsersForDate.__len__() < countForUnInterestedEvent:
+            countForUnInterestedEvent = uniqUsersForDate.__len__()
+            unpopularEvent=[event]
+        elif uniqUsersForDate.__len__() == countForUnInterestedEvent:
+            unpopularEvent.append(event)
+        unpopEvent={"events":unpopularEvent,"peopleCount":countForUnInterestedEvent}
+        #endregion
+
+    return render(request, "kandleapp/userPage.html", {"events": events, "url":url,
+    "popularEvents":popEvent,"unpopularEvents":unpopEvent})
