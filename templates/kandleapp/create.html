@@ -1,35 +1,19 @@
-﻿<!DOCTYPE html> {% load static %}
-<html lang="en">
+﻿{% extends '__Layout.html' %} {% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>kandle</title>
+{% block extraCss %}
+<link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.min.css' %}">
+<link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.min.css.map' %}">
+<link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css' %}">
+<link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css.map' %}">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
-    <!-- Styles bootstrap and bootstrap-datepicker -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-        crossorigin="anonymous">
+{% endblock extraCss %}
+{% block extraJs %}
+<script src="{% static 'bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js' %}"></script>
+{% endblock extraJs %}
 
-    <link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.min.css.map' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker3.standalone.min.css.map' %}">
-    <!-- End styles bootstrap and bootstrap-datepicker -->
-
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <!-- Scripts bootstrap and bootstrap-datepicker -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-    <script src="{% static 'bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
-    <script src="{% static 'bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js' %}"></script>
-
-    <!-- End scripts bootstrap and bootstrap-datepicker -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-</head>
-
-<body>
-
+{% block content %}
     <form id="form" method="POST">
         {% csrf_token %} {% comment %}защита от CSRF-атак{% endcomment %}
         <div class="span5 col-md-12">
@@ -137,46 +121,12 @@
                     $(".datepicker").each(function (index, elem) {
                         wishDates[elem.value] = [allStartTimes[index], allFinishTimes[index]];
                     });
-                    // alert(JSON.stringify(wishDates));
-                    // console.log(JSON.stringify(wishDates));
-                    // var values = {};
-                    // var fields = $('#form :input');
-                    // $.each(fields, function (i, field) {
-                    //     var dom = $(field),
-                    //         name = dom.attr('id'),
-                    //         value = dom.val();
-                    //     values[name] = value;
-                    // });
-                    // values.wishDates = {};
-                    // // $.each(wishDates, function (i, field) {
-                    // //     values.wishDates[field[i] + "[]"] = field;
-                    // // });
-
-                    // // post data
-                    // $.post('http://localhost:8000/create', values);
+                    
                     $('<input />').attr('type', 'hidden')
                         .attr('name', "wishDates")
                         .attr('value', JSON.stringify(wishDates))
                         .appendTo('#form');
-                    // return true;
                 });
-
-
-//             $( "#form" ).submit(function( event ) {
-//   console.log( $( this ).serializeArray() );
-//   event.preventDefault();
-// });
-            // $.ajax({
-            //     url: "http://localhost:8000/create",
-            //     type: 'POST',
-            //     data: { 'wishDates': wishDates },
-            //     traditional: true,
-            //     dataType: 'html',
-            //     success: function (result) {
-            //         alert("kkk");
-            //     }
-            // });
-    
         function callDateTimePicker() {
             $('.datepicker').datepicker({
                 weekStart: 1,
@@ -198,7 +148,4 @@
         }
         callDateTimePicker();
     </script>
-
-</body>
-
-</html>
+    {% endblock %}

@@ -1,38 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>kandle</title>
-</head>
-
-<body>
-    <h3>Your created event:</h3>
-    <ul>
-        {% for e in events %}
-        <li>
-            <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    <hr/>
-    <h4>You have {{ popularEvents.events|length }} events</h4>
-    <h5>Events involved {{ popularEvents.peopleCount }} people</h5>
-    <ul>
-        {% for e in popularEvents.events %}
-        <li>
-            <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    <hr/>
-    <h4>You have, unfortunately, {{ unpopularEvents.events|length }} events</h4>
-    <h5>Events involved {{ unpopularEvents.peopleCount }} people</h5>
-    <ul>
-        {% for e in unpopularEvents.events %}
-        <li>
-            <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-</body>
+{% extends '__Layout.html' %} {% block content %}
+<h3>Your created event:</h3>
+<ul>
+    {% for e in events %}
+    <li>
+        <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+<hr/>
+<h4>You have {{ popularEvents.events|length }} popular events</h4>
+<h5>Events involved {{ popularEvents.peopleCount }} people</h5>
+<ul>
+    {% for e in popularEvents.events %}
+    <li>
+        <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+<hr/>
+<h4>You have, unfortunately, {{ unpopularEvents.events|length }} unpopular events</h4>
+<h5>Events involved {{ unpopularEvents.peopleCount }} people</h5>
+<ul>
+    {% for e in unpopularEvents.events %}
+    <li>
+        <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}

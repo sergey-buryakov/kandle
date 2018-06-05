@@ -1,34 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends '__Layout.html' %} {% block content %}
+<h1>{{ event.name }}</h1>
+<p>Description: {{ event.description }}</p>
+<p>Link: {{ url }}</p>
+{{ event.startVote }}
+<div></div>
+<form id="form" method="POST">
+    {% csrf_token %}
+    <ul>
+        {% for d in dates %}
+        <li>{{ d.date }} {{ d.startTime }} {{ d.finishTime }} {% if user in d.users.all %}
+            <input name="che" id="checkbox{{ d.dateId }}" type="checkbox" checked value="{{ d.dateId }}"> {% else %}
+            <input name="che" id="checkbox{{ d.dateId }}" type="checkbox" value="{{ d.dateId }}"> {% endif %}
+        </li>
+        {% endfor %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>kandle</title>
-</head>
-
-<body>
-    <h1>{{ event.name }}</h1>
-    <p>Description: {{ event.description }}</p>
-    <p>Link: {{ url }}</p>
-    {{ event.startVote }}
-    <div></div>
-    <form id="form" method="POST">
-        {% csrf_token %}
-        <ul>
-            {% for d in dates %}
-                <li>{{ d.date }} {{ d.startTime }} {{ d.finishTime }} {% if user in d.users.all %}
-                    <input name="che" id="checkbox{{ d.dateId }}" type="checkbox" checked value="{{ d.dateId }}"> {% else %}
-                    <input name="che" id="checkbox{{ d.dateId }}" type="checkbox" value="{{ d.dateId }}"> {% endif %}
-                </li>
-            {% endfor %}
-
-        </ul>
-        <button type="submit" name="vote">Vote</button>
-        {% if user == event.userId %}
-            <button type="submit" name="finish vote">Finish vote</button>
-        {% endif %}
-    </form>
-
-</body>
-
-</html>
+    </ul>
+    <button type="submit" name="vote">Vote</button>
+    {% if user == event.userId %}
+    <button type="submit" name="finish vote">Finish vote</button>
+    {% endif %}
+</form>
+{% endblock content %}
