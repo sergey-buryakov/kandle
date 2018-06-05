@@ -27,6 +27,7 @@ from datetime import datetime
 #endregion
 from .forms import Sign_up_form, CreateEventForm, CreateDate
 from .models import Event,Date
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -98,6 +99,8 @@ def complete(request, backend, *args, **kwargs):
                        redirect_name=REDIRECT_FIELD_NAME, request=request,
                        *args, **kwargs)
 #endregion
+
+
 def showStatistic(request,event):
     dates = event.date_set.all()
     countUserForDates={}
@@ -105,7 +108,8 @@ def showStatistic(request,event):
         countUserForDates[date.date.strftime('%m/%d/%Y')] = date.users.all().count()
     data = {"countUserForDates": countUserForDates}
     return render(request, "kandleapp/voteResult.html", data)
-#@login_required
+
+@login_required
 def event(request, eventid):
     try:
 
@@ -118,14 +122,16 @@ def event(request, eventid):
         #     None
         if request.method == "POST":
             lis = request.POST.getlist("che")
-            #
-            #
-            #
-            #there is need to be written code for delete all user's dates and paste new set
-        dates = event.date_set.all()
-
-        url = request.get_host() + request.get_full_path()
-        data = {"event": event, "dates": dates, "url": url}
+            user = User.objects.get(id=request.user.id)
+            if user.date_set.exists():
+                user.date_set.clear()
+            for i in lis:
+                user.date_set.add(Date.objects.get(dateId=i))
+            return redirect(request.path)
+        else:
+            dates = event.date_set.all()
+            url = request.get_host() + request.get_full_path()
+            data = {"event": event, "dates": dates, "url": url}
         return render(request, "kandleapp/events.html", data)
     except Event.DoesNotExist:
         return HttpResponseNotFound("<h2>Event not found</h2>")
@@ -157,7 +163,7 @@ def create(request):
             for date in dates:
                 event.date_set.add(date, bulk=False)
 
-            return redirect(event, eventid=event.eventUrl)
+            return redirect("event/" + event.eventUrl)
      else:
        
         createform = CreateEventForm()

@@ -17,7 +17,7 @@ class CreateEventForm(ModelForm):
     class Meta:
         model = Event
         
-        fields = ['name', 'description', 'startVote', 'finishVote']
+        fields = ['name', 'description', 'startVote', 'finishVote', 'private']
         widgets = {
             'name': forms.TextInput(),
             'startVote': forms.DateInput(attrs={'class': 'input-sm form-control'}),
