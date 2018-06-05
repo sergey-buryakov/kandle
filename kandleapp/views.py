@@ -221,4 +221,5 @@ def userdash(request):
         #endregion
 
     return render(request, "kandleapp/userPage.html", {"events": events, "url":url,
-    "popularEvents":popEvent,"unpopularEvents":unpopEvent})
+    "popularEvents":popEvent,"unpopularEvents":unpopEvent,
+    "randomEvent":random.choice(events)})
