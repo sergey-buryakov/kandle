@@ -26,7 +26,7 @@ import random
 from datetime import datetime
 #endregion
 from .forms import Sign_up_form, CreateEventForm, CreateDate
-from .models import Event,Date
+from .models import Event, Date
 from django.contrib.auth.models import User
 
 
@@ -113,13 +113,13 @@ def showStatistic(request,event):
 def event(request, eventid):
     try:
 
-        event = Event.objects.get(eventUrl = eventid)
-        # if event.closedForVote:
-        
-        #return showStatistic(re
-        # quest,event)     
-        # if event.finishVote == datetime.today():
-        #     None
+        event = Event.objects.get(eventUrl=eventid)
+        if event.closedForVote:
+            return showStatistic(request, event)
+        if event.finishVote == datetime.today():
+            event.closedForVote = True
+            event.save()
+            return showStatistic(request, event)
         if request.method == "POST":
             lis = request.POST.getlist("che")
             user = User.objects.get(id=request.user.id)
@@ -168,3 +168,8 @@ def create(request):
        
         createform = CreateEventForm()
      return render(request, "kandleapp/create.html", {"form": createform, "dateForm": dateForm})
+
+# @login_required
+# def userdash(request):
+#     events = request.user.event_set.all()
+#     return render(request, "kandleapp/dashboard.html", {"events": events})

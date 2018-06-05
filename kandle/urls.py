@@ -23,6 +23,7 @@ from social_django.urls import extra
 urlpatterns = [
     re_path(r'^$', views.index),
     re_path(r'^sign_up$', views.sign_up),
+    # re_path(r'^dashboard$', views.userdash),
     re_path(r'^accounts/', include('django.contrib.auth.urls')),
     re_path(r'^create', views.create),
     re_path(r'^event/(?P<eventid>.+)', views.event), #add regex
