@@ -1,8 +1,19 @@
-{% extends '__Layout.html' %} {% block content %} 
-    <p>Vote result:</p>
-    <ul>
-    {% for d,c in countUserForDates.items %}
-        <li>{{d}}<p style="display:inline;"> have voted :{{c}} people</p></li>
-    {% endfor %}
-</ul>
+{% extends '__Layout.html' %} 
+ {% load static %}
+ {% block extraCss %}
+<link rel="stylesheet" href="{% static 'css/create.css' %}">
+{% endblock extraCss %}
+{% block content %}
+<div class="container">
+	<div class="row main">
+		<div class="col-md-12 col-centered text-center bg"> 
+			<h1 class="heading">Vote result:</h1>
+			<ul class="list-group">
+			{% for d,c in countUserForDates.items %}
+				<li class="list-group-item list-group-item-info"><span class="text text_result">{{d}}</span> have voted :{{c}} people</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>	
 {% endblock content %}

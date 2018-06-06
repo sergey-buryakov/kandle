@@ -19,21 +19,23 @@ class CreateEventForm(ModelForm):
         
         fields = ['name', 'description', 'startVote', 'finishVote', 'private']
         widgets = {
-            'name': forms.TextInput(),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+			'description': forms.Textarea(attrs={'class': 'form-control'}),
+
             'startVote': forms.DateInput(attrs={'class': 'input-sm form-control'}),
             'finishVote': forms.DateInput(attrs={'class': 'input-sm form-control'})
         }
         labels = {
-            'name': _('Название'),
-            'description': _('Описание')
+            'name': _('Title'),
+            'description': _('Description')
         }
 class CreateDate(forms.ModelForm):
     class Meta:
         model = Date
         fields = ['date', 'startTime', 'finishTime']
         widgets = {
-            'date': forms.DateInput(attrs={'class': 'datepicker'}),
-            'startTime': forms.DateInput(attrs={'class':'timepicker'}),
-            'finishTime': forms.DateInput(attrs={'class':'timepicker'})
+            'date': forms.DateInput(attrs={'class': 'datepicker form-control date_in'}),
+            'startTime': forms.DateInput(attrs={'class':'timepicker form-control'}),
+            'finishTime': forms.DateInput(attrs={'class':'timepicker form-control'})
         }
 

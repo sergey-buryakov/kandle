@@ -1,23 +1,33 @@
-{% extends '__Layout.html' %} {% block content %}
-<h1>{{ event.name }}</h1>
-<p>Description: {{ event.description }}</p>
-<p>Link: {{ url }}</p>
-{{ event.startVote }}
-<div></div>
-<form id="form" method="POST">
-    {% csrf_token %}
-    <ul>
-        {% for d in dates %}
-        <li>{{ d.date }} {{ d.startTime }} {{ d.finishTime }} {% if user in d.users.all %}
-            <input name="che" id="checkbox{{ d.dateId }}" type="checkbox" checked value="{{ d.dateId }}"> {% else %}
-            <input name="che" id="checkbox{{ d.dateId }}" type="checkbox" value="{{ d.dateId }}"> {% endif %}
-        </li>
-        {% endfor %}
+{% extends '__Layout.html' %}
+ {% load static %}
+ {% block extraCss %}
+<link rel="stylesheet" href="{% static 'css/create.css' %}">
+{% endblock extraCss %}
+{% block content %}
+<div class="container">
+<div class="row main">
+	<div class="col-md-12 col-centered text-center bg">
+		<h1 class="heading">{{ event.name }}</h1>
+		<p><span class="text">Description:</span> {{ event.description }}</p>
+		<p><span class="text">Link:</span> {{ url }}</p>
 
-    </ul>
-    <button type="submit" name="vote">Vote</button>
-    {% if user == event.userId %}
-    <button type="submit" name="finish vote">Finish vote</button>
-    {% endif %}
-</form>
+		<form id="form" method="POST">
+			{% csrf_token %}
+			<ul class="list-group">
+				{% for d in dates %}
+				<li class="list-group-item list-group-item-info">{{ d.date }} {{ d.startTime }} {{ d.finishTime }} {% if user in d.users.all %}
+					<input name="che" id="checkbox{{ d.dateId }}" type="checkbox" checked value="{{ d.dateId }}"> {% else %}
+					<input name="che" id="checkbox{{ d.dateId }}" type="checkbox" value="{{ d.dateId }}"> {% endif %}
+				</li>
+				{% endfor %}
+
+			</ul>
+			<button type="submit" name="vote" class="btn btn-primary">Vote</button>
+			{% if user == event.userId %}
+			<button type="submit" name="finish vote" class="btn btn-primary">Finish vote</button>
+			{% endif %}
+		</form>
+	</div>
+</div>
+</div>
 {% endblock content %}

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
-    'kandleapp'
+    'kandleapp',
+	'bootstrap3'
 ]
 
 MIDDLEWARE = [

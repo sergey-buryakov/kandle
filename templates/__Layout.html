@@ -1,9 +1,12 @@
+ {% load static %}
 <!DOCTYPE html>  
 <html>
 <head>
     <meta charset="utf-8" />
     <title>{% block title %}Kandle{% endblock title %}</title>
-
+	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
@@ -13,13 +16,40 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-    {% block extraCss %}{% endblock extraCss %}
+    {% block extraCss %}
+	
+	<link rel="stylesheet" href="{% static 'css/create.css' %}">
+	{% endblock extraCss %}
     {% block extraJs %}{% endblock extraJs %}
 </head>
 <body>
+<div class="bg-img">
+	<div class="col-sm-4 col-xs-12 logotype-kandle">
+							<svg viewBox="0 0 300 100">
+						  <symbol id="s-text">
+						    <text text-anchor="middle" x="50%" y="50%" dy=".35em">Kandle</text>
+						  </symbol>
+
+						  <use class="text" xlink:href="#s-text"></use>
+						  <use class="text" xlink:href="#s-text"></use>
+						  <use class="text" xlink:href="#s-text"></use>
+						  <use class="text" xlink:href="#s-text"></use>
+						  <use class="text" xlink:href="#s-text"></use>
+						</svg>
+	</div>
     <h1>{% block header %}{% endblock header %}</h1>
     <div>{% block content %}{% endblock content %}</div>
-    <hr>
-    <div>Footer</div>
+    <footer>
+		<div class="container">
+			<p class="text_footer">© 2018  All Rights Reserved.</p>
+			<div class="soc_link">
+				<a type="button" class="btn-floating btn-lg btn-fb"><i class="fa fa-facebook"></i></a>
+				<a type="button" class="btn-floating btn-lg btn-tw"><i class="fa fa-twitter"></i></a>
+				<a type="button" class="btn-floating btn-lg btn-gplus"><i class="fa fa-google-plus"></i></a>
+				<a type="button" class="btn-floating btn-lg btn-li"><i class="fa fa-linkedin"></i></a>
+			</div>
+		</div>
+	</footer>
+</div>
 </body>
 </html>
