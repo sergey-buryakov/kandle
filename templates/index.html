@@ -60,6 +60,9 @@
 									<span class="intro-text-small">Welcome to Kandle</span>
 									<h1>The simple way to decide on dates, places & more.</h1>
 								</div>
+                                {% if user.is_authenticated %}
+{#                                    чет придумать#}
+                                {% else %}
 								<div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
 									<div class="form-wrap">
 										<div class="tab">
@@ -121,6 +124,7 @@
 															<div class="col-md-12">
 																<input type="submit" class="btn btn-primary" value="Login">
 															</div>
+                                                            <span>or</span>
                                                             <div class="col-md-12">
 																<a class="btn btn-default" href="/sign_up" role="button">Sign Up</a>
 															</div>
@@ -132,6 +136,7 @@
 										</div>
 									</div>
 								</div>
+                                {% endif %}
 							</div>
 
 
