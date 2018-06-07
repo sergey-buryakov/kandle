@@ -1,32 +1,38 @@
-{% extends '__Layout.html' %} {% block content %}
-<h3>Your created event:</h3>
-<ul>
-    {% for e in events %}
-    <li>
-        <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
-<hr/>
-<h4>You have {{ popularEvents.events|length }} popular events</h4>
-<h5>Events involved {{ popularEvents.peopleCount }} people</h5>
-<ul>
-    {% for e in popularEvents.events %}
-    <li>
-        <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
-<hr/>
-<h4>You have, unfortunately, {{ unpopularEvents.events|length }} unpopular events</h4>
-<h5>Events involved {{ unpopularEvents.peopleCount }} people</h5>
-<ul>
-    {% for e in unpopularEvents.events %}
-    <li>
-        <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
-<hr/>
-<h3>Your random event is <p><a href="http://{{url}}/event/{{randomEvent.eventUrl}}">{{ randomEvent.name }}</a></p></h3>
+{% extends '__Layout.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <p>User: {{ user.get_username }}</p>
+        <p><a class="btn btn-default" role="button" href="{% url 'logout'%}?next=/">Logout</a></p>
+    {% endif %}
+    <a class="btn btn-default" role="button" href="/settings">Settings</a>
+    <h3>Your created event:</h3>
+    <ul>
+        {% for e in events %}
+        <li>
+            <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <hr/>
+    <h4>You have {{ popularEvents.events|length }} popular events</h4>
+    <h5>Events involved {{ popularEvents.peopleCount }} people</h5>
+    <ul>
+        {% for e in popularEvents.events %}
+        <li>
+            <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <hr/>
+    <h4>You have, unfortunately, {{ unpopularEvents.events|length }} unpopular events</h4>
+    <h5>Events involved {{ unpopularEvents.peopleCount }} people</h5>
+    <ul>
+        {% for e in unpopularEvents.events %}
+        <li>
+            <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <hr/>
+    <h3>Your random event is <p><a href="http://{{url}}/event/{{randomEvent.eventUrl}}">{{ randomEvent.name }}</a></p></h3>
 {% endblock content %}
