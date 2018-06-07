@@ -1,4 +1,4 @@
-{% extends '__Layout.html' %} 
+{% extends '__Layout.html' %}
  {% load static %}
  {% block extraCss %}
 <link rel="stylesheet" href="{% static 'css/create.css' %}">
@@ -6,7 +6,7 @@
 {% block content %}
 <div class="container">
 	<div class="row main">
-		<div class="col-md-12 col-centered text-center bg"> 
+		<div class="col-md-12 col-centered text-center bg">
 			<h1 class="heading">Vote result:</h1>
 			<ul class="list-group">
 			{% for d,c in countUserForDates.items %}
@@ -15,5 +15,5 @@
 			</ul>
 		</div>
 	</div>
-</div>	
+</div>
 {% endblock content %}

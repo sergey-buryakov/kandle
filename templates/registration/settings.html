@@ -4,7 +4,7 @@
   <h2>Settings</h2>
   {% if user.is_authenticated %}
         <p>User: {{ user.get_username }}</p>
-        <p><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></p> 
+        <p><a href="{% url 'logout'%}?next=/">Logout</a></p>
     {% endif %}
 
   <h3>Google</h3>

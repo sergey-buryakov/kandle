@@ -10,23 +10,24 @@
 		<h1 class="heading">{{ event.name }}</h1>
 		<p><span class="text">Description:</span> {{ event.description }}</p>
 		<p><span class="text">Link:</span> {{ url }}</p>
+        {% block poll %}
+            <form id="form" method="POST">
+                {% csrf_token %}
+                <ul class="list-group">
+                    {% for d in dates %}
+                    <li class="list-group-item list-group-item-info">{{ d.date }} {{ d.startTime }} {{ d.finishTime }} {% if user in d.users.all %}
+                        <input name="che" id="checkbox{{ d.dateId }}" type="checkbox" checked value="{{ d.dateId }}"> {% else %}
+                        <input name="che" id="checkbox{{ d.dateId }}" type="checkbox" value="{{ d.dateId }}"> {% endif %}
+                    </li>
+                    {% endfor %}
 
-		<form id="form" method="POST">
-			{% csrf_token %}
-			<ul class="list-group">
-				{% for d in dates %}
-				<li class="list-group-item list-group-item-info">{{ d.date }} {{ d.startTime }} {{ d.finishTime }} {% if user in d.users.all %}
-					<input name="che" id="checkbox{{ d.dateId }}" type="checkbox" checked value="{{ d.dateId }}"> {% else %}
-					<input name="che" id="checkbox{{ d.dateId }}" type="checkbox" value="{{ d.dateId }}"> {% endif %}
-				</li>
-				{% endfor %}
-
-			</ul>
-			<button type="submit" name="vote" class="btn btn-primary">Vote</button>
-			{% if user == event.userId %}
-			<button type="submit" name="finish vote" class="btn btn-primary">Finish vote</button>
-			{% endif %}
-		</form>
+                </ul>
+                <button type="submit" name="vote" class="btn btn-primary">Vote</button>
+                {% if user == event.userId %}
+                <button type="submit" name="finish vote" class="btn btn-primary">Finish vote</button>
+                {% endif %}
+            </form>
+        {% endblock poll %}
 	</div>
 </div>
 </div>
