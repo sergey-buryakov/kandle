@@ -4,12 +4,11 @@
     Log in
 {% endblock %}
 
-{% block header %}
-    <h1>Log in</h1>
-{% endblock %}
-
 {% block content %}
-
+<div class="container">
+	<div class="row main">
+		<div class="col-md-12 col-centered text-center bg">
+	<h1 class="heading">Log in</h1>
     {% if form.errors %}
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
@@ -26,16 +25,20 @@
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Login</button>
+        <button type="submit" class="btn btn-primary btn-lg">Login</button>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
 
     {# Assumes you setup the password_reset view in your URLconf #}
-    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+    <p class="te"><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
     <p><strong>-- OR --</strong></p>
-    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
-    <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
-
-    <p><a href="/">Back</a></p>
+	<div class="social">
+    <a href="{% url 'social:begin' 'google-oauth2' %}" ><span class="fa fa-google icon icon-google"></span></a><br>
+    <a href="{% url 'social:begin' 'facebook' %}" ><span class="fa fa-facebook icon icon-facebook"></span></a>
+	</div>
+    <p><a href="/"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Back</a></p>
+</div>
+	</div>
+</div>
 {% endblock %}
