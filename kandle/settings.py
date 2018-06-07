@@ -25,7 +25,8 @@ SECRET_KEY = 'n!_!tuz%kt%8l5y4)4(9c9&^!^x$i@l==v(z1o_ti(19%he4f4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kandle-env.3h7m7gnpru.us-east-2.elasticbeanstalk.com',
+'localhost']
 
 
 # Application definition

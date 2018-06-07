@@ -188,7 +188,7 @@ def create(request):
 
 # @login_required
 def userdash(request):
-    eventsPublic = Event.objects.filter(private=False)
+    eventsPublic = Event.objects.filter(private=False)#.filter(closedForVote=False)
     events = request.user.event_set.all()
     url = request.get_host()
     countForHighInterestedEvent = 0
