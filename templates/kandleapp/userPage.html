@@ -1,43 +1,54 @@
-{% extends '__Layout.html' %}
-{% block content %}
+{% extends '__Layout.html' %} {% block content %}
 <div class="container">
-	<div class="row main">
-		<div class="col-md-12 col-centered text-center bg">
-    {% if user.is_authenticated %}
-        <p><span class="text">User:</span> {{ user.get_username }}</p>
-    {% endif %}
-    <a class="btn btn-default" role="button" href="/settings">Settings</a>
-    <h2 class="heading">Your created event:</h2>
-    <ul>
-        {% for e in events %}
-        <li>
-            <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    <hr/>
-    <h2 class="heading">You have {{ popularEvents.events|length }} popular events</h2>
-    <h5>Events involved {{ popularEvents.peopleCount }} people</h5>
-    <ul>
-        {% for e in popularEvents.events %}
-        <li>
-            <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    <hr/>
-    <h2 class="heading">You have, unfortunately, {{ unpopularEvents.events|length }} unpopular events</h2>
-    <h5>Events involved {{ unpopularEvents.peopleCount }} people</h5>
-    <ul>
-        {% for e in unpopularEvents.events %}
-        <li>
-            <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    <hr/>
-    <h2 class="heading">Your random event is </h2><p><a href="http://{{url}}/event/{{randomEvent.eventUrl}}">{{ randomEvent.name }}</a></p>
-</div>
-	</div>
+    <div class="row main">
+        <div class="col-md-12 col-centered text-center bg">
+            {% if user.is_authenticated %}
+            <p>
+                <span class="text">User:</span> {{ user.get_username }}</p>
+            {% endif %}
+            <a class="btn btn-default" role="button" href="/settings">Settings</a>
+            <h2 class="heading">Your created event:</h2>
+            <ul>
+                {% for e in events %}
+                <li>
+                    <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <hr/>
+            {% if popularEvents.peopleCount == 0 %}
+            <h2 class="heading">People've not voted for your events =(</h2>
+            {% else %}
+            <h2 class="heading">You have {{ popularEvents.events|length }} popular events</h2>
+            <h5>Events involved {{ popularEvents.peopleCount }} people</h5>
+            <ul>
+                {% for e in popularEvents.events %}
+                <li>
+                    <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <hr/>
+            <h2 class="heading">You have, unfortunately, {{ unpopularEvents.events|length }} unpopular events</h2>
+            <h5>Events involved {{ unpopularEvents.peopleCount }} people</h5>
+            <ul>
+                {% for e in unpopularEvents.events %}
+                <li>
+                    <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <hr/> {% if randomEvent %}
+            <h2 class="heading">Your random event is </h2>
+            <p>
+                <a href="http://{{url}}/event/{{randomEvent.eventUrl}}">{{ randomEvent.name }}</a>
+            </p>
+            {% else %}
+            <h2 class="heading">Unfortunately public opened events are missing=( </h2>
+            {% endif %}
+
+        </div>
+    </div>
 </div>
 {% endblock content %}

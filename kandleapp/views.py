@@ -188,10 +188,12 @@ def create(request):
 
 # @login_required
 def userdash(request):
-    #eventsPublic = Event.objects.filter(private=False)#.filter(closedForVote=False)
-	
-    events = request.user.event_set.all()
-    eventsPublic = events
+    eventsPublic = Event.objects.all().filter(private=False).filter(closedForVote=False)# .filter(name="fnvhjfbdjvh")
+    if eventsPublic.exists():
+        eventsPublic = random.choice(eventsPublic)
+ 
+    events = request.user.event_set.all().order_by('name')
+    
     url = request.get_host()
     countForHighInterestedEvent = 0
     popularEvent=[]
@@ -237,4 +239,4 @@ def userdash(request):
 
     return render(request, "kandleapp/userPage.html", {"events": events, "url":url,
     "popularEvents":popEvent,"unpopularEvents":unpopEvent,
-    "randomEvent":random.choice(eventsPublic)})
+    "randomEvent":eventsPublic})
