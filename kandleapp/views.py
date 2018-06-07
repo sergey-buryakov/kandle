@@ -137,7 +137,13 @@ def event(request, eventid):
                 lis = request.POST.getlist("che")
                 user = User.objects.get(id=request.user.id)
                 if user.date_set.exists():
+                    dates=user.date_set.all()
+                    newDates=[]
+                    for d in dates:
+                        if d.eventId.id != event.id:
+                            newDates.append(d)
                     user.date_set.clear()
+                    user.date_set.set(newDates)
                 for i in lis:
                     user.date_set.add(Date.objects.get(dateId=i))
                 return redirect(request.path)
@@ -185,9 +191,27 @@ def create(request):
        
         createform = CreateEventForm()
      return render(request, "kandleapp/create.html", {"form": createform, "dateForm": dateForm})
+def searchEventsWhereUserInvolved(request):
+    events = Event.objects.all()
+    user = request.user
+    eventWhereUserInvolved = []
+    for event in events:
+        dates = event.date_set.all()
+        isLoopInterruped=False
+        for date in dates:
+            for u in date.users.all():
+                if u.username==user.username and event.userId.id!=user.id:
+                    eventWhereUserInvolved.append(event)
+                    isLoopInterruped=True
+                    break
+            if isLoopInterruped:
+                break
+    return eventWhereUserInvolved
+
 
 # @login_required
 def userdash(request):
+    eventWhereUserInvolved=searchEventsWhereUserInvolved(request)
     eventsPublic = Event.objects.all().filter(private=False).filter(closedForVote=False)# .filter(name="fnvhjfbdjvh")
     if eventsPublic.exists():
         eventsPublic = random.choice(eventsPublic)
@@ -239,4 +263,5 @@ def userdash(request):
 
     return render(request, "kandleapp/userPage.html", {"events": events, "url":url,
     "popularEvents":popEvent,"unpopularEvents":unpopEvent,
-    "randomEvent":eventsPublic})
+    "randomEvent":eventsPublic,
+    "eventWhereUserInvolved":eventWhereUserInvolved})

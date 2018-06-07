@@ -7,6 +7,15 @@
                 <span class="text">User:</span> {{ user.get_username }}</p>
             {% endif %}
             <a class="btn btn-default" role="button" href="/settings">Settings</a>
+            <h2 class="heading">You are left your vote at the next events:</h2>
+            <ul>
+                {% for e in eventWhereUserInvolved %}
+                <li>
+                    <a href="http://{{url}}/event/{{e.eventUrl}}">{{ e.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <hr/>
             <h2 class="heading">Your created event:</h2>
             <ul>
                 {% for e in events %}
