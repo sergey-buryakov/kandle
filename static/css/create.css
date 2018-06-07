@@ -1,8 +1,8 @@
 body{
-	font-family: 'Kanit', sans-serif;
+	font-family: 'Jua', sans-serif;
 }
 h1,h2{
-	font-family: 'Amatic SC', cursive;
+	font-family: 'Jua', sans-serif;
 }
 label{
 	font-size: 22px;
@@ -54,6 +54,7 @@ label{
 }
 li{
 	list-style: none;
+	color: #abb2bc;
 }
 p{
 	font-size: 22px;
@@ -183,6 +184,7 @@ html, body {
 .helptext{
 	display: block;
 	font-size:14px;
+	color: #abb2bc;
 }
 
 .icon {
@@ -221,5 +223,26 @@ html, body {
 }
 .button-index{
 	width: 40%;
+    margin-left: 30%;
+}
+#id_first_name, #id_last_name, #id_email, #id_email, #id_password1, #id_password2{
+	width: 30%;
+	margin-left:35%;
+	margin-right: 35%;
+}
+.menu__list{
+	display: inline-flex;
+}
+.list__item{
+	text-align: center;
+	color: #F2385A;
+	display: inline-block;
+	margin-right:10px;
+}
+.list__item--orange{
+	color: #F5A503;
+}
+.button-login{
+    width: 40%;
     margin-left: 30%;
 }

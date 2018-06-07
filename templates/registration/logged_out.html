@@ -1,9 +1,15 @@
 {% extends "__Layout.html" %}
 
 {% block content %}
+<div class="container">
+	<div class="row main">
+		<div class="col-md-12 col-centered text-center bg">
     <p>Logged out!</p>  
 
     <a href="{% url 'login'%}">Click here to login again.</a>
 
-    <p><a href="/">Main page</a></p>
+    <p><a href="/"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Main page</a></p>
+</div>
+	</div>
+</div>	
 {% endblock %}
