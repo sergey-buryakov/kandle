@@ -414,6 +414,7 @@ h1, h2, h3, h4, h5, h6, figure {
   padding: 30px;
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
+  border-radius: 7px;
 }
 #gtco-header .form-wrap .tab-content .tab-content-inner {
   display: none;

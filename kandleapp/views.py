@@ -25,13 +25,25 @@ import string
 import random
 from datetime import datetime
 #endregion
-from .forms import Sign_up_form, CreateEventForm, CreateDate
+from .forms import Sign_up_form, CreateEventForm, CreateDate, LoginForm
 from .models import Event, Date
 from django.contrib.auth.models import User
 
 
 def index(request):
-    return render(request, 'index.html')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                return redirect(userdash)
+            else:
+                login_message = 'Enter the username and password correctly'
+    else:
+        form = LoginForm()
+        login_message = ''
+    return render(request, 'index.html', {'form': form, 'login_message': login_message})
 
 #region Auth
 def sign_up(request):
