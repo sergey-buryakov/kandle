@@ -145,12 +145,12 @@ html, body {
   width: 100%;
   height: 100%;
 }
-
 .bg-img {
   position: relative;
   width: 100%;
   background-size: cover;
   margin-top: -23px;
+  z-index: -1;
 }
 .bg-img:before {
   content: '';
@@ -161,6 +161,7 @@ html, body {
   left: 0;
   background-image: linear-gradient(to bottom right, #3AA1BF, #56D9CD, #E9F1DF, #F5A503, #F2385A);
   opacity: .6;
+  z-index: -1;
 }
 .bg{
 	width: 85%;
