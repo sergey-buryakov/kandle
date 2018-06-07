@@ -40,7 +40,7 @@
 
 	
     <h1>{% block header %}	<ul class="menu__list">
-		<li><a href="/dashdoard" class="list__item">Dashboard</a></li>
+		<li><a href="/dashboard" class="list__item">Dashboard</a></li>
 		<li><a href="/create" class="list__item list__item--orange">Create event</a></li>
 		{% if user.is_authenticated %}
 		<a href={% url 'logout' %} class="list__item">Logout</a>
